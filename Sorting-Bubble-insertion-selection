@@ -1,0 +1,91 @@
+import java.util.*;
+
+public class Sorting {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter size of array");
+        int n = sc.nextInt();
+        int[] a = new int[n];
+        System.out.println("enter element");
+        for (int i = 0; i < n; i++) {
+            a[i] = sc.nextInt();
+        }
+        int ch = 0;
+        do {
+            System.out.println(
+                    "\nenter 1 for bubble sort\nenter 2 for insertion sort\nenter 3 for selection sort\nenter 0 for exit\n");
+            ch = sc.nextInt();
+            switch (ch) {
+                case 1:
+                    BubbleSort x = new BubbleSort();
+                    x.bubbleSort(a, n);
+                    break;
+                case 2:
+                    InsertionSort y = new InsertionSort();
+                    y.insertionSort(a, n);
+                    break;
+                case 3:
+                    SelectionSort z = new SelectionSort();
+                    z.selectionsort(a, n);
+                    break;
+            }
+        } while (ch != 0);
+
+    }
+}
+
+class BubbleSort {
+    public void bubbleSort(int a[], int n) {
+        int temp = 0, flag = 0;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1 - i; j++) {
+                if (a[j] > a[j + 1]) {
+                    flag = 1;
+                    temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
+            }
+            if (flag == 0)
+                break;
+        }
+        for (int x : a)
+            System.out.print(x + " ");
+    }
+}
+
+class InsertionSort {
+    public void insertionSort(int a[], int n) {
+        int j = 0;
+        for (int i = 1; i < n; i++) {
+            int temp = a[i];
+            for (j = i - 1; j >= 0 && a[j] > temp; j--) {
+                a[j + 1] = a[j];
+            }
+            a[j + 1] = temp;
+        }
+        for (int x : a)
+            System.out.print(x + " ");
+    }
+
+}
+
+class SelectionSort {
+    public void selectionsort(int a[], int n) {
+        for (int i = 0; i < n - 1; i++) {
+            int min = a[i], pos = i, j = 0;
+            for (j = i + 1; j < n; j++) {
+                if (min > a[j]) {
+                    min = a[j];
+                    pos = j;
+                }
+            }
+            if (pos != i) {
+               a[pos]=a[i];
+               a[i]=min;
+            }
+        }
+        for (int x : a)
+            System.out.print(x + " ");
+    }
+}

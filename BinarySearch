@@ -1,0 +1,42 @@
+//Pre condition is array must be sorted
+public class BinarySearchOne {
+    public static void main(String[] args) {
+        int arr[] = { 2, 4, 5, 6, 7, 8, 12, 34, 55, 67, 88 };
+        BinarySearch xx = new BinarySearch();
+        int n = xx.searchBinary(arr, 342);
+        if(n==1)
+        System.out.println("found");
+        else
+        System.out.println("not found");
+    }
+}
+
+class BinarySearch {
+    public int searchBinary(int a[], int key) {
+        int start = 0;
+        int end = a.length - 1;
+        int mid = 0;
+        while (start <= end) {
+            mid = start + (end - start) / 2;
+            if (a[mid] == key)
+                return 1;
+                //when array is sorted in ascending order
+            else if (a[0] < a[a.length-1]) {
+                if (a[mid] > key) {
+                    end = mid - 1;
+
+                } else
+                    start = mid + 1;
+            } 
+            //when array is sorted in descending order
+            else if (a[0] > a[a.length-1]) {
+                if (a[mid] > key)
+                    start = mid + 1;
+                else
+                    end = mid - 1;
+            }
+
+        }
+        return 0;
+    }
+}

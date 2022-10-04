@@ -1,0 +1,28 @@
+// Sort an array in  o(n) time complexity
+//when elements from 1 to n are given
+
+public class cycleSort {
+    public static void main(String[] args) {
+        int arr[] = { 1, 4, 2, 5, 3, 8, 6, 9, 7,15,13,12,11,14,10 };
+        cycle(arr);
+    }
+
+    static void cycle(int []arr)
+    {
+        for(int i=0;i<arr.length;)
+        {
+            int val=arr[i]-1;
+            if(arr[i]!=arr[val])
+            {
+                int temp=arr[i];
+                arr[i]=arr[val];
+                arr[val]=temp;
+            }
+            else
+            i++;
+        }
+        for(int a: arr)
+        System.out.print(a+" ");
+        
+    }
+}

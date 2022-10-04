@@ -1,0 +1,91 @@
+import java.util.Arrays;
+
+public class searchin2Darray {
+    public static void main(String[] args) {
+        int[][] arr = {
+                { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 }, { 11, 12, 13, 14, 15 }
+        };
+        System.out.println(Arrays.toString(two_darray(arr, 10)));
+    }
+//Matrix sorted in a row manner and column mannner
+// 10 20 30 40
+// 15 25 35 45
+// 28 29 37 49
+// 33 34 38 50
+
+    static int[] two_darray(int[][] arr, int target) {
+        int row = 0, col = arr[0].length - 1;
+        while (row < arr.length && col >= 0) {
+            if (arr[row][col] == target)
+                return new int[] { row, col };
+            else if (arr[row][col] > target)
+                col--;
+            else
+                row++;
+        }
+        return new int[] { -1, -1 };
+
+    }
+
+    
+
+    //Above code also work for the below problem but below work faster it takes o(log_n+log_m)
+    //where n=no of rows, m= no of columns
+    //strictly sorted
+// means each element of each row is greater than it's previous elements
+//and smaller than the next row element of same index
+// 1   2  3   4  5
+// 6   7  8   9  10
+// 11 12  13  14  15
+static int[] searchStrictlySorted(int[][] arr, int target) {
+        if (arr.length == 1)
+            return Binary2D(arr, 0, 0, arr[0].length - 1, target);
+        int row_length = arr.length - 1;
+        int col_length = arr[0].length - 1;
+        int row_start = 0, row_end = row_length;
+        int col_mid = col_length / 2;
+        // run loop until we left with only two row
+        while (row_end - row_start != 2) {
+            int row_mid = row_start + (row_end - row_start) / 2;
+            if (arr[row_mid][col_mid] == target)
+                return new int[] { row_mid, col_mid };
+            else if (arr[row_mid][col_mid] > target)
+                row_end = row_mid;
+            else
+                row_start = row_mid;
+        }
+        // now we have two loop
+        //search in two columns
+        if (arr[row_start][col_mid] == target)
+            return new int[] { row_start, col_mid };
+        if (arr[row_start + 1][col_mid] == target)
+            return new int[] { row_start + 1, col_mid };
+
+//search in 4 half
+        
+        if (arr[row_start][col_mid - 1] >= target)
+            return Binary2D(arr, row_start, 0, col_mid - 1, target);
+        if (arr[row_start][col_mid + 1] <= target && target <= arr[row_start][col_length])
+            return Binary2D(arr, row_start, col_mid + 1, col_length, target);
+        if (arr[row_start + 1][col_mid - 1] >= target)
+            return Binary2D(arr, row_start + 1, 0, col_mid - 1, target);
+        if (arr[row_start + 1][col_mid + 1] <= target && target <= arr[row_start + 1][col_length])
+            return Binary2D(arr, row_start + 1, col_mid + 1, col_length, target);
+
+        return new int[] { -1, -1 };
+    }
+
+    static int[] Binary2D(int[][] arr, int row, int cstart, int cend, int target) {
+        while (cstart <= cend) {
+            int mid = cstart + (cend - cstart) / 2;
+            if (arr[row][mid] == target)
+                return new int[] { row, mid };
+            else if (arr[row][mid] > target)
+                cend = mid - 1;
+            else
+                cstart = mid + 1;
+        }
+        return new int[] { -1, -1 };
+    }
+
+}

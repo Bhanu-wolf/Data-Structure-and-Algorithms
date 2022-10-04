@@ -55,7 +55,16 @@ static int[] searchStrictlySorted(int[][] arr, int target) {
                 row_start = row_mid;
         }
         // now we have two loop
-        //search in two columns
+       // when we have a single column or search in columns
+       
+        if(arr[0].length==1)
+        {
+        if (arr[row_start][col_mid] == target)
+            return true;
+        if (arr[row_start + 1][col_mid] == target)
+            return true;
+        return false;
+        }
         if (arr[row_start][col_mid] == target)
             return new int[] { row_start, col_mid };
         if (arr[row_start + 1][col_mid] == target)
